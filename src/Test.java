@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
-    String pytanie;
-    List<String> odpowiedzi = new ArrayList<>();
-    int poprawnaOdpowiedz;
+    String question;
+    List<String> answers = new ArrayList<>();
+    int correctAnswer;
 
-    public Test(String pytanie, List<String> odpowiedzi, int poprawnaOdpowiedz) {
-        this.pytanie = pytanie;
-        this.odpowiedzi = odpowiedzi;
-        this.poprawnaOdpowiedz = poprawnaOdpowiedz;
+    public Test(String question, List<String> answers, int correctAnswer) {
+        this.question = question;
+        this.answers = answers;
+        this.correctAnswer = correctAnswer;
     }
 }

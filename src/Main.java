@@ -4,75 +4,75 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        PlatformaEdukacyjna platforma = new PlatformaEdukacyjna();
+        EducationalPlatform platform = new EducationalPlatform();
 //
-//        Instruktor instruktor = new Instruktor("Patrick", "Bateman");
+//        Instructor Instructor = new Instructor("Patrick", "Bateman");
 //
-//        Kurs kurs = new Kurs("Kurs na wózek widłowy", "Kurs uczący obsługi wózków widłowych", instruktor);
-//        Modul modul = new Modul("Jazda wózkiem");
+//        Course Course = new Course("Course na wózek widłowy", "Course uczący obsługi wózków widłowych", Instructor);
+//        Module Module = new Module("Jazda wózkiem");
 //
-//        List<String> odpowiedzi = new ArrayList<>();
-//        odpowiedzi.add("Typ danych");
-//        odpowiedzi.add("Przechowywana wartość");
-//        odpowiedzi.add("Klasa");
+//        List<String> answers = new ArrayList<>();
+//        answers.add("Typ danych");
+//        answers.add("Przechowywana wartość");
+//        answers.add("Klasa");
 //
-//        Test test = new Test("Co to jest zmienna w Javie?", odpowiedzi, 1);
+//        Test test = new Test("Co to jest zmienna w Javie?", answers, 1);
 //
-//        modul.dodajTest(test);
-//        kurs.dodajModul(modul);
-//        platforma.dodajKurs(kurs);
+//        Module.addTest(test);
+//        Course.dodajModul(Module);
+//        platform.addCourse(Course);
 //
-//        System.out.println("Dodano kurs: " + kurs.tytul);
+//        System.out.println("Dodano Course: " + Course.title);
         Scanner scanner = new Scanner(System.in);
 
 
-        List<Instruktor> instruktorzy = new ArrayList<>();
-        instruktorzy.add(new Instruktor("Andrzej", "Kmicic"));
-        instruktorzy.add(new Instruktor("Patrick", "Bateman"));
-        instruktorzy.add(new Instruktor("Kacper", "Prokop"));
-        instruktorzy.add(new Instruktor("John", "Johny"));
-        instruktorzy.add(new Instruktor("Marcin", "Gortat"));
+        List<Instructor> instructors = new ArrayList<>();
+        instructors.add(new Instructor("Andrzej", "Kmicic"));
+        instructors.add(new Instructor("Patrick", "Bateman"));
+        instructors.add(new Instructor("Kacper", "Prokop"));
+        instructors.add(new Instructor("John", "Johny"));
+        instructors.add(new Instructor("Marcin", "Gortat"));
 
-        List<Kurs> kursy = new ArrayList<>();
-        kursy.add(new Kurs("Kurs javy", "Podstawowy kurs Javy", instruktorzy.get(0)));
-        kursy.add(new Kurs("Kurs obsługi wózka widłowego", "Kurs dla operatorów wózków widłowych", instruktorzy.get(1)));
-        kursy.add(new Kurs("Kurs podstaw Excela", "Kurs pracy z arkuszami kalkulacyjnymi", instruktorzy.get(2)));
-        kursy.add(new Kurs("Kurs Cyberbzezpieczeństwa", "Ochrona danych i cyberbezpieczeństwo", instruktorzy.get(3)));
-        kursy.add(new Kurs("Kurs pierwszej pomocy", "Podstawy udzielania pierwszej pomocy", instruktorzy.get(4)));
+        List<Course> courses = new ArrayList<>();
+        courses.add(new Course("Course javy", "Podstawowy Course Javy", instructors.get(0)));
+        courses.add(new Course("Course obsługi wózka widłowego", "Course dla operatorów wózków widłowych", instructors.get(1)));
+        courses.add(new Course("Course podstaw Excela", "Course pracy z arkuszami kalkulacyjnymi", instructors.get(2)));
+        courses.add(new Course("Course Cyberbzezpieczeństwa", "Ochrona danych i cyberbezpieczeństwo", instructors.get(3)));
+        courses.add(new Course("Course pierwszej pomocy", "Podstawy udzielania pierwszej pomocy", instructors.get(4)));
 
-        kursy.forEach(platforma::dodajKurs);
+        courses.forEach(platform::addCourse);
 
-        Kurs kursWozek = kursy.get(1);
-        Modul modulWozek = new Modul("Bezpieczeństwo i obsługa");
-        List<Test> testyWozek = new ArrayList<>();
-        testyWozek.add(new Test("Jakie jest maksymalne obciążenie wózka?", new ArrayList<>(List.of("500 kg", "1000 kg", "Zależy od modelu")), 2));
-        testyWozek.add(new Test("Co zrobić przed rozpoczęciem pracy?", new ArrayList<>(List.of("Sprawdzić poziom paliwa", "Przeczyścić wózek", "Skontrolować stan techniczny")), 2));
-        testyWozek.add(new Test("Jakie są główne zagrożenia przy obsłudze wózka?", new ArrayList<>(List.of("Upadek ładunku", "Przebicie opony", "Zmęczenie kierowcy")), 0));
-        testyWozek.forEach(modulWozek::dodajTest);
-        kursWozek.dodajModul(modulWozek);
+        Course courseForklift = courses.get(1);
+        Module moduleForklift = new Module("Bezpieczeństwo i obsługa");
+        List<Test> testsForklift = new ArrayList<>();
+        testsForklift.add(new Test("Jakie jest maksymalne obciążenie wózka?", new ArrayList<>(List.of("500 kg", "1000 kg", "Zależy od modelu")), 2));
+        testsForklift.add(new Test("Co zrobić przed rozpoczęciem pracy?", new ArrayList<>(List.of("Sprawdzić poziom paliwa", "Przeczyścić wózek", "Skontrolować stan techniczny")), 2));
+        testsForklift.add(new Test("Jakie są główne zagrożenia przy obsłudze wózka?", new ArrayList<>(List.of("Upadek ładunku", "Przebicie opony", "Zmęczenie kierowcy")), 0));
+        testsForklift.forEach(moduleForklift::addTest);
+        courseForklift.dodajModul(moduleForklift);
 
-        System.out.println("Dostępne testy kursu 'Obsługa wózka widłowego':");
-        for (int i = 0; i < testyWozek.size(); i++) {
-            System.out.println((i + 1) + ". " + testyWozek.get(i).pytanie);
+        System.out.println("Dostępne tests kursu 'Obsługa wózka widłowego':");
+        for (int i = 0; i < testsForklift.size(); i++) {
+            System.out.println((i + 1) + ". " + testsForklift.get(i).question);
         }
 
         System.out.print("Wybierz numer pytania do rozwiązania: ");
-        int wybor = scanner.nextInt() - 1;
+        int choice = scanner.nextInt() - 1;
 
-        if (wybor >= 0 && wybor < testyWozek.size()) {
-            Test wybranyTest = testyWozek.get(wybor);
-            System.out.println(wybranyTest.pytanie);
-            for (int i = 0; i < wybranyTest.odpowiedzi.size(); i++) {
-                System.out.println((i + 1) + ". " + wybranyTest.odpowiedzi.get(i));
+        if (choice >= 0 && choice < testsForklift.size()) {
+            Test chosenTest = testsForklift.get(choice);
+            System.out.println(chosenTest.question);
+            for (int i = 0; i < chosenTest.answers.size(); i++) {
+                System.out.println((i + 1) + ". " + chosenTest.answers.get(i));
             }
 
-            System.out.print("Wybierz numer odpowiedzi: ");
-            int odpowiedz = scanner.nextInt() - 1;
+            System.out.print("Wybierz numer answers: ");
+            int answer = scanner.nextInt() - 1;
 
-            if (odpowiedz == wybranyTest.poprawnaOdpowiedz) {
+            if (answer == chosenTest.correctAnswer) {
                 System.out.println("Poprawna odpowiedź!");
             } else {
-                System.out.println("Błędna odpowiedź. Poprawna to: " + (wybranyTest.poprawnaOdpowiedz + 1));
+                System.out.println("Błędna odpowiedź. Poprawna to: " + (chosenTest.correctAnswer + 1));
             }
         } else {
             System.out.println("Niepoprawny wybór pytania.");

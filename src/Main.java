@@ -19,7 +19,7 @@ public class Main {
 //        Test test = new Test("Co to jest zmienna w Javie?", answers, 1);
 //
 //        Module.addTest(test);
-//        Course.dodajModul(Module);
+//        Course.addModule(Module);
 //        platform.addCourse(Course);
 //
 //        System.out.println("Dodano Course: " + Course.title);
@@ -49,7 +49,7 @@ public class Main {
         testsForklift.add(new Test("Co zrobić przed rozpoczęciem pracy?", new ArrayList<>(List.of("Sprawdzić poziom paliwa", "Przeczyścić wózek", "Skontrolować stan techniczny")), 2));
         testsForklift.add(new Test("Jakie są główne zagrożenia przy obsłudze wózka?", new ArrayList<>(List.of("Upadek ładunku", "Przebicie opony", "Zmęczenie kierowcy")), 0));
         testsForklift.forEach(moduleForklift::addTest);
-        courseForklift.dodajModul(moduleForklift);
+        courseForklift.addModule(moduleForklift);
 
         System.out.println("Dostępne tests kursu 'Obsługa wózka widłowego':");
         for (int i = 0; i < testsForklift.size(); i++) {

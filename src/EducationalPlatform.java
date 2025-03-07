@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class EducationalPlatform {
     List<Course> courses = new ArrayList<>();
     List<User> users = new ArrayList<>();
+    List<Instructor> instructors = new ArrayList<>();
 
     void addCourse(Course Course) {
         courses.add(Course);
@@ -10,5 +11,8 @@ public class EducationalPlatform {
 
     void registerUser(User User) {
         users.add(User);
+    }
+    void addInstructor(Instructor instructor) {
+        instructors.add(instructor);
     }
 }

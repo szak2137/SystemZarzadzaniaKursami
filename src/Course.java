@@ -1,31 +1,44 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Course {
-    String title;
-    String description;
-    Instructor Instructor;
-    List<Module> modules = new ArrayList<>();
-    CourseStatus status;
-    List<User> signedUsers = new ArrayList<>();
-    List<User> enrolledUsers = new ArrayList<>();
+class Course {
+    private String title;
+    private String description;
+    private Instructor instructor;
+    private List<Module> modules       = new ArrayList<>();
+    private List<User>   enrolledUsers = new ArrayList<>();
 
-    public Course(String title, String description, Instructor Instructor) {
-        this.title = title;
+    public Course(String title, String description, Instructor instructor) {
+        this.title       = title;
         this.description = description;
-        this.Instructor = Instructor;
-        this.status = CourseStatus.NEW;
+        this.instructor  = instructor;
+        instructor.addTaughtCourse(this);
     }
 
-    void addModule(Module Module) {
-        modules.add(Module);
+    public String     getTitle()       { return title; }
+    public String     getDescription() { return description; }
+    public Instructor getInstructor()  { return instructor; }
+
+    public void addModule(Module module) {
+        modules.add(module);
     }
-    void signUser(User User) {
-        signedUsers.add(User);
-        System.out.println(User.name + " " + User.surname + " zapisał(a) się na Course: " + title);
+
+    public List<Module> getModules() {
+        return Collections.unmodifiableList(modules);
     }
+
+    public List<User> getEnrolledUsers() {
+        return Collections.unmodifiableList(enrolledUsers);
+    }
+
     void enrollUser(User user) {
         enrolledUsers.add(user);
-        System.out.println(user.name + " " + user.surname + " zapisał się na kurs: " + title);
+        System.out.println(user.getFullName() + " zapisał się na kurs: " + title);
+    }
+
+    @Override
+    public String toString() {
+        return title + " (instruktor: " + instructor.getFullName() + ")";
     }
 }

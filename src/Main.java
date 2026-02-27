@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         EducationalPlatform platform = new EducationalPlatform();
+
         Instructor instructor1 = new Instructor("Marcin", "Gortat");
         Instructor instructor2 = new Instructor("Kacper", "Prokop");
         Instructor instructor3 = new Instructor("Piotr", "Gryf");
@@ -18,19 +19,26 @@ public class Main {
         platform.registerUser(user2);
         platform.registerUser(user3);
 
-        Course course1 = new Course("Podstawy programowania", "Kurs wprowadzający do programowania", instructor1);
-        Course course2 = new Course("Obsługa Excela", "Nauka obsługi programu Excel", instructor2);
-        Course course3 = new Course("Bezpieczeństwo w sieci", "Podstawy cyberbezpieczeństwa", instructor3);
+        Course course1 = new Course("Podstawy programowania",  "Kurs wprowadzający do programowania", instructor1);
+        Course course2 = new Course("Obsługa Excela",           "Nauka obsługi programu Excel",         instructor2);
+        Course course3 = new Course("Bezpieczeństwo w sieci",  "Podstawy cyberbezpieczeństwa",         instructor3);
         platform.addCourse(course1);
         platform.addCourse(course2);
         platform.addCourse(course3);
 
         Module module1 = new Module("Wprowadzenie");
-        Test test1 = new Test("Jakie jest główne przeznaczenie języka Java?",
-                Arrays.asList("Tworzenie stron internetowych", "Tworzenie aplikacji mobilnych", "Tworzenie aplikacji wieloplatformowych", "Obsługa baz danych"), 3);
+        Test test1 = new Test(
+                "Jakie jest główne przeznaczenie języka Java?",
+                Arrays.asList(
+                        "Tworzenie stron internetowych",
+                        "Tworzenie aplikacji mobilnych",
+                        "Tworzenie aplikacji wieloplatformowych",
+                        "Obsługa baz danych"
+                ),
+                2
+        );
         module1.addTest(test1);
         course1.addModule(module1);
-
 
         while (true) {
             System.out.println("\nWybierz opcję:");
@@ -46,97 +54,124 @@ public class Main {
             scanner.nextLine();
 
             switch (choice) {
-                case 1:
-                    System.out.print("Podaj tytuł kursu: ");
-                    String courseTitle = scanner.nextLine();
-                    System.out.print("Podaj opis kursu: ");
-                    String courseDescription = scanner.nextLine();
-                    System.out.print("Podaj imię instruktora: ");
-                    String instructorFirstName = scanner.nextLine();
-                    System.out.print("Podaj nazwisko instruktora: ");
-                    String instructorLastName = scanner.nextLine();
-                    Instructor instructor = new Instructor(instructorFirstName, instructorLastName);
-                    Course newCourse = new Course(courseTitle, courseDescription, instructor);
-                    platform.addCourse(newCourse);
-                    System.out.println("Dodano kurs: " + courseTitle);
-                    break;
-                case 2:
-                    System.out.print("Podaj imię użytkownika: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Podaj nazwisko użytkownika: ");
-                    String surname = scanner.nextLine();
-                    System.out.print("Podaj email użytkownika: ");
-                    String email = scanner.nextLine();
-                    User newUser = new User(name, surname, email);
-                    platform.registerUser(newUser);
-                    System.out.println("Zarejestrowano użytkownika: " + name + " " + surname);
-                    break;
-                case 3:
-                    System.out.println("Wybierz kurs do testu:");
-                    for (int i = 0; i < platform.courses.size(); i++) {
-                        System.out.println((i + 1) + ". " + platform.courses.get(i).title);
+                case 1: {
+                    System.out.print("Tytuł kursu: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Opis kursu: ");
+                    String desc = scanner.nextLine();
+
+                    List<Instructor> instructors = platform.getInstructors();
+                    System.out.println("Wybierz instruktora:");
+                    for (int i = 0; i < instructors.size(); i++) {
+                        System.out.println((i + 1) + ". " + instructors.get(i).getFullName());
                     }
-                    int courseIndex = scanner.nextInt() - 1;
+                    int idx = scanner.nextInt() - 1;
                     scanner.nextLine();
-                    if (courseIndex >= 0 && courseIndex < platform.courses.size()) {
-                        Course selectedCourse = platform.courses.get(courseIndex);
-                        boolean hasTest = false;
-                        for (Module module : selectedCourse.modules) {
-                            for (Test test : module.tests) {
-                                hasTest = true;
-                                System.out.println(test.question);
-                                for (int i = 0; i < test.answers.size(); i++) {
-                                    System.out.println((i + 1) + ". " + test.answers.get(i));
-                                }
-                                System.out.print("Wybierz odpowiedź: ");
-                                int answer = scanner.nextInt();
-                                if (answer - 1 == test.correctAnswer) {
-                                    System.out.println("Poprawna odpowiedź!");
-                                } else {
-                                    System.out.println("Niepoprawna odpowiedź.");
-                                }
+                    if (idx >= 0 && idx < instructors.size()) {
+                        Course newCourse = new Course(title, desc, instructors.get(idx));
+                        platform.addCourse(newCourse);
+                        System.out.println("Kurs \"" + title + "\" został dodany.");
+                    } else {
+                        System.out.println("Niepoprawny wybór instruktora.");
+                    }
+                    break;
+                }
+                case 2: {
+                    System.out.print("Imię: ");
+                    String firstName = scanner.nextLine();
+                    System.out.print("Nazwisko: ");
+                    String lastName = scanner.nextLine();
+                    System.out.print("Email: ");
+                    String email = scanner.nextLine();
+                    platform.registerUser(new User(firstName, lastName, email));
+                    System.out.println("Użytkownik " + firstName + " " + lastName + " został zarejestrowany.");
+                    break;
+                }
+                case 3: {
+                    List<Course> courses = platform.getCourses();
+                    System.out.println("Wybierz kurs do testu:");
+                    for (int i = 0; i < courses.size(); i++) {
+                        System.out.println((i + 1) + ". " + courses.get(i).getTitle());
+                    }
+                    int courseIdx = scanner.nextInt() - 1;
+                    scanner.nextLine();
+
+                    if (courseIdx < 0 || courseIdx >= courses.size()) {
+                        System.out.println("Niepoprawny wybór kursu.");
+                        break;
+                    }
+
+                    Course selectedCourse = courses.get(courseIdx);
+                    boolean hasTest = false;
+
+                    for (Module module : selectedCourse.getModules()) {
+                        for (Test test : module.getTests()) {
+                            hasTest = true;
+                            System.out.println("\n" + test.getQuestion());
+                            List<String> answers = test.getAnswers();
+                            for (int i = 0; i < answers.size(); i++) {
+                                System.out.println((i + 1) + ". " + answers.get(i));
+                            }
+                            System.out.print("Wybierz odpowiedź (1-" + answers.size() + "): ");
+                            int answer = scanner.nextInt() - 1; // konwersja na indeks od 0
+                            scanner.nextLine();
+
+                            // POLIMORFIZM – wywołanie checkAnswer() na obiekcie Test
+                            if (test.checkAnswer(answer)) {
+                                System.out.println("Poprawna odpowiedź!");
+                            } else {
+                                System.out.println("Niepoprawna odpowiedź. Prawidłowa: "
+                                        + answers.get(test.getCorrectAnswer()));
                             }
                         }
-                        if (!hasTest) {
-                            System.out.println("Ten kurs nie zawiera testu.");
-                        }
-                    } else {
-                        System.out.println("Niepoprawny wybór kursu.");
+                    }
+
+                    if (!hasTest) {
+                        System.out.println("Ten kurs nie zawiera testu.");
                     }
                     break;
-                case 4:
-                    System.out.print("Podaj imię instruktora: ");
-                    String newInstructorFirstName = scanner.nextLine();
-                    System.out.print("Podaj nazwisko instruktora: ");
-                    String newInstructorLastName = scanner.nextLine();
-                    Instructor newInstructor = new Instructor(newInstructorFirstName, newInstructorLastName);
-                    platform.addInstructor(newInstructor);
-                    System.out.println("Dodano instruktora: " + newInstructorFirstName + " " + newInstructorLastName);
+                }
+                case 4: {
+                    System.out.print("Imię instruktora: ");
+                    String firstName = scanner.nextLine();
+                    System.out.print("Nazwisko instruktora: ");
+                    String lastName = scanner.nextLine();
+                    platform.addInstructor(new Instructor(firstName, lastName));
+                    System.out.println("Instruktor " + firstName + " " + lastName + " został dodany.");
                     break;
-                case 5:
-                    System.out.print("Podaj imię użytkownika: ");
-                    String userFirstName = scanner.nextLine();
-                    System.out.print("Podaj nazwisko użytkownika: ");
-                    String userLastName = scanner.nextLine();
-                    System.out.print("Podaj tytuł kursu: ");
-                    String userCourseTitle = scanner.nextLine();
-                    Optional<User> userOpt = platform.users.stream().filter(u -> u.name.equals(userFirstName) && u.surname.equals(userLastName)).findFirst();
-                    Optional<Course> courseOpt = platform.courses.stream().filter(c -> c.title.equals(userCourseTitle)).findFirst();
-                    if (userOpt.isPresent() && courseOpt.isPresent()) {
-                        courseOpt.get().enrollUser(userOpt.get());
+                }
+                case 5: {
+                    List<User> users = platform.getUsers();
+                    System.out.println("Wybierz użytkownika:");
+                    for (int i = 0; i < users.size(); i++) {
+                        System.out.println((i + 1) + ". " + users.get(i).getFullName());
+                    }
+                    int userIdx = scanner.nextInt() - 1;
+                    scanner.nextLine();
+
+                    List<Course> courses = platform.getCourses();
+                    System.out.println("Wybierz kurs:");
+                    for (int i = 0; i < courses.size(); i++) {
+                        System.out.println((i + 1) + ". " + courses.get(i).getTitle());
+                    }
+                    int courseIdx = scanner.nextInt() - 1;
+                    scanner.nextLine();
+
+                    if (userIdx >= 0 && userIdx < users.size()
+                            && courseIdx >= 0 && courseIdx < courses.size()) {
+                        users.get(userIdx).enrollInCourse(courses.get(courseIdx));
                     } else {
-                        System.out.println("Nie znaleziono użytkownika lub kursu.");
+                        System.out.println("Niepoprawny wybór.");
                     }
                     break;
+                }
                 case 6:
                     System.out.println("Zakończono program.");
                     scanner.close();
                     return;
                 default:
                     System.out.println("Nieprawidłowa opcja, spróbuj ponownie.");
-                    break;
             }
         }
-
     }
 }

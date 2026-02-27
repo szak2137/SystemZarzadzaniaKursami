@@ -1,18 +1,16 @@
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
-public class EducationalPlatform {
-    List<Course> courses = new ArrayList<>();
-    List<User> users = new ArrayList<>();
-    List<Instructor> instructors = new ArrayList<>();
+class EducationalPlatform {
+    private List<Course>     courses     = new ArrayList<>();
+    private List<User>       users       = new ArrayList<>();
+    private List<Instructor> instructors = new ArrayList<>();
 
-    void addCourse(Course Course) {
-        courses.add(Course);
-    }
+    public void addCourse(Course course)         { courses.add(course); }
+    public void registerUser(User user)          { users.add(user); }
+    public void addInstructor(Instructor instr)  { instructors.add(instr); }
 
-    void registerUser(User User) {
-        users.add(User);
-    }
-    void addInstructor(Instructor instructor) {
-        instructors.add(instructor);
-    }
+    public List<Course>     getCourses()     { return Collections.unmodifiableList(courses); }
+    public List<User>       getUsers()       { return Collections.unmodifiableList(users); }
+    public List<Instructor> getInstructors() { return Collections.unmodifiableList(instructors); }
 }

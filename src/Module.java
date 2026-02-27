@@ -1,15 +1,24 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Module {
-    String title;
-    List<Test> tests = new ArrayList<>();
+class Module extends CourseElement {
+    private List<Test> tests = new ArrayList<>();
 
     public Module(String title) {
-        this.title = title;
+        super(title);
     }
 
-    void addTest(Test test) {
+    public void addTest(Test test) {
         tests.add(test);
+    }
+
+    public List<Test> getTests() {
+        return Collections.unmodifiableList(tests);
+    }
+
+    @Override
+    public String describe() {
+        return "Moduł: " + getTitle() + " (testów: " + tests.size() + ")";
     }
 }

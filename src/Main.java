@@ -1,24 +1,26 @@
 import java.util.*;
-
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         EducationalPlatform platform = new EducationalPlatform();
 
-        Instructor instructor1 = new Instructor("Marcin", "Gortat");
-        Instructor instructor2 = new Instructor("Kacper", "Prokop");
-        Instructor instructor3 = new Instructor("Piotr", "Gryf");
+        // Domyślni instruktorzy
+        Instructor instructor1 = new Instructor("Jan", "Kowalski");
+        Instructor instructor2 = new Instructor("Anna", "Nowak");
+        Instructor instructor3 = new Instructor("Piotr", "Wiśniewski");
         platform.addInstructor(instructor1);
         platform.addInstructor(instructor2);
         platform.addInstructor(instructor3);
 
-        User user1 = new User("Vernon", "Roche", "roche2137@gmail.com");
-        User user2 = new User("Pan", "Tadeusz", "tadek@gmail.com.com");
-        User user3 = new User("Wojciech", "Szczęsny", "wojtek@op.com");
+        // Domyślni użytkownicy
+        User user1 = new User("Marek", "Zieliński",   "marek@example.com");
+        User user2 = new User("Ewa",   "Dąbrowska",   "ewa@example.com");
+        User user3 = new User("Tomasz","Lewandowski",  "tomasz@example.com");
         platform.registerUser(user1);
         platform.registerUser(user2);
         platform.registerUser(user3);
 
+        // Domyślne kursy
         Course course1 = new Course("Podstawy programowania",  "Kurs wprowadzający do programowania", instructor1);
         Course course2 = new Course("Obsługa Excela",           "Nauka obsługi programu Excel",         instructor2);
         Course course3 = new Course("Bezpieczeństwo w sieci",  "Podstawy cyberbezpieczeństwa",         instructor3);
@@ -26,6 +28,7 @@ public class Main {
         platform.addCourse(course2);
         platform.addCourse(course3);
 
+        // Moduł i test dla kursu 1
         Module module1 = new Module("Wprowadzenie");
         Test test1 = new Test(
                 "Jakie jest główne przeznaczenie języka Java?",
@@ -35,11 +38,12 @@ public class Main {
                         "Tworzenie aplikacji wieloplatformowych",
                         "Obsługa baz danych"
                 ),
-                2
+                2  // indeks od 0 → "Tworzenie aplikacji wieloplatformowych"
         );
         module1.addTest(test1);
         course1.addModule(module1);
 
+        // Pętla główna
         while (true) {
             System.out.println("\nWybierz opcję:");
             System.out.println("1. Dodaj kurs");
@@ -83,8 +87,10 @@ public class Main {
                     String lastName = scanner.nextLine();
                     System.out.print("Email: ");
                     String email = scanner.nextLine();
-                    platform.registerUser(new User(firstName, lastName, email));
-                    System.out.println("Użytkownik " + firstName + " " + lastName + " został zarejestrowany.");
+                    User newUser = new User(firstName, lastName, email);
+                    if (platform.registerUser(newUser)) {
+                        System.out.println("Użytkownik " + firstName + " " + lastName + " został zarejestrowany.");
+                    }
                     break;
                 }
                 case 3: {

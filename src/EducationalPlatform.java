@@ -7,7 +7,16 @@ class EducationalPlatform {
     private List<Instructor> instructors = new ArrayList<>();
 
     public void addCourse(Course course)         { courses.add(course); }
-    public void registerUser(User user)          { users.add(user); }
+    public boolean registerUser(User user) {
+        boolean emailTaken = users.stream()
+                .anyMatch(u -> u.getEmail().equalsIgnoreCase(user.getEmail()));
+        if (emailTaken) {
+            System.out.println("Użytkownik z emailem " + user.getEmail() + " już istnieje w systemie.");
+            return false;
+        }
+        users.add(user);
+        return true;
+    }
     public void addInstructor(Instructor instr)  { instructors.add(instr); }
 
     public List<Course>     getCourses()     { return Collections.unmodifiableList(courses); }

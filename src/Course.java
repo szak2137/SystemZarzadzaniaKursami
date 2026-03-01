@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import java.util.*;
 class Course {
     private String title;
     private String description;
@@ -32,7 +29,17 @@ class Course {
         return Collections.unmodifiableList(enrolledUsers);
     }
 
+    // Pakietowy dostęp – wywołuje User.enrollInCourse(), nie bezpośrednio
     void enrollUser(User user) {
+        boolean alreadyEnrolled = enrolledUsers.stream()
+                .anyMatch(u -> u.getEmail().equalsIgnoreCase(user.getEmail()));
+
+        if (alreadyEnrolled) {
+            System.out.println("Użytkownik z emailem " + user.getEmail()
+                    + " jest już zapisany na kurs: " + title);
+            return;
+        }
+
         enrolledUsers.add(user);
         System.out.println(user.getFullName() + " zapisał się na kurs: " + title);
     }

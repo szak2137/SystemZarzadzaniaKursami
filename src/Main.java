@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -13,17 +14,17 @@ public class Main {
         platform.addInstructor(instructor3);
 
         // Domyślni użytkownicy
-        User user1 = new User("Marek", "Zieliński",   "marek@example.com");
-        User user2 = new User("Ewa",   "Dąbrowska",   "ewa@example.com");
-        User user3 = new User("Tomasz","Lewandowski",  "tomasz@example.com");
+        User user1 = new User("Marek", "Zieliński",  "marek@example.com");
+        User user2 = new User("Ewa",   "Dąbrowska",  "ewa@example.com");
+        User user3 = new User("Tomasz","Lewandowski", "tomasz@example.com");
         platform.registerUser(user1);
         platform.registerUser(user2);
         platform.registerUser(user3);
 
         // Domyślne kursy
-        Course course1 = new Course("Podstawy programowania",  "Kurs wprowadzający do programowania", instructor1);
-        Course course2 = new Course("Obsługa Excela",           "Nauka obsługi programu Excel",         instructor2);
-        Course course3 = new Course("Bezpieczeństwo w sieci",  "Podstawy cyberbezpieczeństwa",         instructor3);
+        Course course1 = new Course("Podstawy programowania", "Kurs wprowadzający do programowania", instructor1);
+        Course course2 = new Course("Obsługa Excela",          "Nauka obsługi programu Excel",        instructor2);
+        Course course3 = new Course("Bezpieczeństwo w sieci", "Podstawy cyberbezpieczeństwa",        instructor3);
         platform.addCourse(course1);
         platform.addCourse(course2);
         platform.addCourse(course3);
@@ -38,7 +39,7 @@ public class Main {
                         "Tworzenie aplikacji wieloplatformowych",
                         "Obsługa baz danych"
                 ),
-                2  // indeks od 0 → "Tworzenie aplikacji wieloplatformowych"
+                2
         );
         module1.addTest(test1);
         course1.addModule(module1);
@@ -51,7 +52,8 @@ public class Main {
             System.out.println("3. Podejdź do testu");
             System.out.println("4. Dodaj instruktora");
             System.out.println("5. Zapisz użytkownika na kurs");
-            System.out.println("6. Wyjście");
+            System.out.println("6. Sprawdź zapisanych użytkowników kursu");
+            System.out.println("7. Wyjście");
             System.out.print("Wybór: ");
 
             int choice = scanner.nextInt();
@@ -72,8 +74,7 @@ public class Main {
                     int idx = scanner.nextInt() - 1;
                     scanner.nextLine();
                     if (idx >= 0 && idx < instructors.size()) {
-                        Course newCourse = new Course(title, desc, instructors.get(idx));
-                        platform.addCourse(newCourse);
+                        platform.addCourse(new Course(title, desc, instructors.get(idx)));
                         System.out.println("Kurs \"" + title + "\" został dodany.");
                     } else {
                         System.out.println("Niepoprawny wybór instruktora.");
@@ -87,8 +88,7 @@ public class Main {
                     String lastName = scanner.nextLine();
                     System.out.print("Email: ");
                     String email = scanner.nextLine();
-                    User newUser = new User(firstName, lastName, email);
-                    if (platform.registerUser(newUser)) {
+                    if (platform.registerUser(new User(firstName, lastName, email))) {
                         System.out.println("Użytkownik " + firstName + " " + lastName + " został zarejestrowany.");
                     }
                     break;
@@ -119,10 +119,9 @@ public class Main {
                                 System.out.println((i + 1) + ". " + answers.get(i));
                             }
                             System.out.print("Wybierz odpowiedź (1-" + answers.size() + "): ");
-                            int answer = scanner.nextInt() - 1; // konwersja na indeks od 0
+                            int answer = scanner.nextInt() - 1;
                             scanner.nextLine();
 
-                            // POLIMORFIZM – wywołanie checkAnswer() na obiekcie Test
                             if (test.checkAnswer(answer)) {
                                 System.out.println("Poprawna odpowiedź!");
                             } else {
@@ -150,7 +149,8 @@ public class Main {
                     List<User> users = platform.getUsers();
                     System.out.println("Wybierz użytkownika:");
                     for (int i = 0; i < users.size(); i++) {
-                        System.out.println((i + 1) + ". " + users.get(i).getFullName());
+                        System.out.println((i + 1) + ". " + users.get(i).getFullName()
+                                + " (" + users.get(i).getEmail() + ")");
                     }
                     int userIdx = scanner.nextInt() - 1;
                     scanner.nextLine();
@@ -171,7 +171,38 @@ public class Main {
                     }
                     break;
                 }
-                case 6:
+                case 6: {
+                    List<Course> courses = platform.getCourses();
+                    System.out.println("Wybierz kurs:");
+                    for (int i = 0; i < courses.size(); i++) {
+                        System.out.println((i + 1) + ". " + courses.get(i).getTitle());
+                    }
+                    int courseIdx = scanner.nextInt() - 1;
+                    scanner.nextLine();
+
+                    if (courseIdx < 0 || courseIdx >= courses.size()) {
+                        System.out.println("Niepoprawny wybór kursu.");
+                        break;
+                    }
+
+                    Course selected = courses.get(courseIdx);
+                    List<User> enrolled = selected.getEnrolledUsers();
+
+                    System.out.println("\nKurs: " + selected.getTitle());
+                    System.out.println("Instruktor: " + selected.getInstructor().getFullName());
+                    if (enrolled.isEmpty()) {
+                        System.out.println("Brak zapisanych użytkowników.");
+                    } else {
+                        System.out.println("Zapisani użytkownicy (" + enrolled.size() + "):");
+                        for (int i = 0; i < enrolled.size(); i++) {
+                            User u = enrolled.get(i);
+                            System.out.println("  " + (i + 1) + ". "
+                                    + u.getFullName() + " – " + u.getEmail());
+                        }
+                    }
+                    break;
+                }
+                case 7:
                     System.out.println("Zakończono program.");
                     scanner.close();
                     return;

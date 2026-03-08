@@ -1,44 +1,165 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        EducationalPlatform platform = new EducationalPlatform();
 
-        Instructor instructor1 = new Instructor("Jan", "Kowalski");
-        Instructor instructor2 = new Instructor("Anna", "Nowak");
-        Instructor instructor3 = new Instructor("Piotr", "Wisniewski");
-        platform.addInstructor(instructor1);
-        platform.addInstructor(instructor2);
-        platform.addInstructor(instructor3);
-
-        User user1 = new User("Marek", "Zielinski",  "marek@example.com");
-        User user2 = new User("Ewa",   "Dabrowska",  "ewa@example.com");
-        User user3 = new User("Tomasz","Lewandowski", "tomasz@example.com");
-        platform.registerUser(user1);
-        platform.registerUser(user2);
-        platform.registerUser(user3);
-
-        Course course1 = new Course("Podstawy programowania", "Kurs wprowadzajacy do programowania", instructor1);
-        Course course2 = new Course("Obsluga Excela",          "Nauka obslugi programu Excel",        instructor2);
-        Course course3 = new Course("Bezpieczenstwo w sieci", "Podstawy cyberbezpieczenstwa",        instructor3);
-        platform.addCourse(course1);
-        platform.addCourse(course2);
-        platform.addCourse(course3);
-
-        Module module1 = new Module("Wprowadzenie");
-        Test test1 = new Test(
+    private static void initializeData(EducationalPlatform platform) {
+        Instructor kowalski    = new Instructor("Jan",     "Kowalski");
+        Instructor nowak       = new Instructor("Anna",    "Nowak");
+        Instructor wisniewski  = new Instructor("Piotr",   "Wisniewski");
+        Instructor wojcik      = new Instructor("Katarzyna","Wojcik");
+        Instructor kaminski    = new Instructor("Michal",  "Kaminski");
+        platform.addInstructor(kowalski);
+        platform.addInstructor(nowak);
+        platform.addInstructor(wisniewski);
+        platform.addInstructor(wojcik);
+        platform.addInstructor(kaminski);
+        User marek   = new User("Marek",   "Zielinski",   "marek@example.com");
+        User ewa     = new User("Ewa",     "Dabrowska",   "ewa@example.com");
+        User tomasz  = new User("Tomasz",  "Lewandowski", "tomasz@example.com");
+        User kasia   = new User("Katarzyna","Wozniak",    "kasia@example.com");
+        User adam    = new User("Adam",    "Nowicki",     "adam@example.com");
+        User julia   = new User("Julia",   "Kowalczyk",  "julia@example.com");
+        User rafal   = new User("Rafal",   "Majewski",   "rafal@example.com");
+        platform.registerUser(marek);
+        platform.registerUser(ewa);
+        platform.registerUser(tomasz);
+        platform.registerUser(kasia);
+        platform.registerUser(adam);
+        platform.registerUser(julia);
+        platform.registerUser(rafal);
+        Course javaPodstawy = new Course(
+                "Podstawy programowania w Javie",
+                "Wprowadzenie do programowania obiektowego w Javie",
+                kowalski,
+                LocalDate.of(2025, 1, 15), LocalDate.of(2025, 3, 15)
+        );
+        Course excel = new Course(
+                "Obsluga Excela",
+                "Nauka obslugi programu Excel od podstaw do poziomu zaawansowanego",
+                nowak,
+                LocalDate.of(2025, 2, 1), LocalDate.of(2025, 4, 1)
+        );
+        Course cybersec = new Course(
+                "Bezpieczenstwo w sieci",
+                "Podstawy cyberbezpieczenstwa i ochrony danych osobowych",
+                wisniewski,
+                LocalDate.of(2025, 3, 10), LocalDate.of(2025, 5, 10)
+        );
+        Course python = new Course(
+                "Python dla poczatkujacych",
+                "Kurs jezyka Python z elementami analizy danych",
+                wojcik,
+                LocalDate.of(2025, 4, 1), LocalDate.of(2025, 6, 30)
+        );
+        Course bazy = new Course(
+                "Bazy danych SQL",
+                "Projektowanie i zarzadzanie relacyjnymi bazami danych",
+                kaminski,
+                LocalDate.of(2025, 2, 15), LocalDate.of(2025, 4, 15)
+        );
+        Course webdev = new Course(
+                "Tworzenie stron WWW",
+                "HTML, CSS i podstawy JavaScript w praktyce",
+                kowalski,
+                LocalDate.of(2025, 5, 1), LocalDate.of(2025, 7, 31)
+        );
+        platform.addCourse(javaPodstawy);
+        platform.addCourse(excel);
+        platform.addCourse(cybersec);
+        platform.addCourse(python);
+        platform.addCourse(bazy);
+        platform.addCourse(webdev);
+        Module javaWprow = new Module("Wprowadzenie do Javy");
+        javaWprow.addTest(new Test(
                 "Jakie jest glowne przeznaczenie jezyka Java?",
                 Arrays.asList(
                         "Tworzenie stron internetowych",
                         "Tworzenie aplikacji mobilnych",
                         "Tworzenie aplikacji wieloplatformowych",
                         "Obsluga baz danych"
-                ),
+                ), 2
+        ));
+        javaWprow.addTest(new Test(
+                "Ktore slowo kluczowe sluzy do dziedziczenia w Javie?",
+                Arrays.asList("implements", "extends", "inherits", "super"),
+                1
+        ));
+        javaPodstawy.addModule(javaWprow);
+
+        Module javaOop = new Module("Programowanie obiektowe");
+        javaOop.addTest(new Test(
+                "Czym jest enkapsulacja?",
+                Arrays.asList(
+                        "Ukrywanie szczegolów implementacji",
+                        "Dziedziczenie po klasie bazowej",
+                        "Przeciazanie metod",
+                        "Tworzenie interfejsow"
+                ), 0
+        ));
+        javaPodstawy.addModule(javaOop);
+
+        Module excelWprow = new Module("Podstawy Excela");
+        excelWprow.addTest(new Test(
+                "Jakiej formuly uzywamy do sumowania zakresu komorek?",
+                Arrays.asList("=ADD()", "=SUM()", "=TOTAL()", "=PLUS()"),
+                1
+        ));
+        excel.addModule(excelWprow);
+
+        Module cybersecWprow = new Module("Zagrozenia w sieci");
+        cybersecWprow.addTest(new Test(
+                "Co to jest phishing?",
+                Arrays.asList(
+                        "Technika szyfrowania danych",
+                        "Rodzaj wirusa komputerowego",
+                        "Metoda wyludzania poufnych informacji",
+                        "Protokol sieciowy"
+                ), 2
+        ));
+        cybersec.addModule(cybersecWprow);
+
+        Module pythonWprow = new Module("Podstawy Pythona");
+        pythonWprow.addTest(new Test(
+                "Jak wypisac tekst na ekran w Pythonie?",
+                Arrays.asList("echo()", "print()", "console.log()", "System.out.println()"),
+                1
+        ));
+        python.addModule(pythonWprow);
+
+        Module sqlWprow = new Module("Podstawy SQL");
+        sqlWprow.addTest(new Test(
+                "Ktore polecenie SQL sluzy do pobierania danych?",
+                Arrays.asList("INSERT", "UPDATE", "SELECT", "DELETE"),
                 2
-        );
-        module1.addTest(test1);
-        course1.addModule(module1);
+        ));
+        bazy.addModule(sqlWprow);
+        marek.enrollInCourse(javaPodstawy);
+        marek.enrollInCourse(bazy);
+        ewa.enrollInCourse(excel);
+        ewa.enrollInCourse(python);
+        tomasz.enrollInCourse(cybersec);
+        tomasz.enrollInCourse(javaPodstawy);
+        kasia.enrollInCourse(python);
+        kasia.enrollInCourse(webdev);
+        adam.enrollInCourse(bazy);
+        adam.enrollInCourse(cybersec);
+        julia.enrollInCourse(webdev);
+        julia.enrollInCourse(excel);
+        rafal.enrollInCourse(javaPodstawy);
+        marek.completeCourse("Podstawy programowania w Javie");
+        ewa.completeCourse("Obsluga Excela");
+        tomasz.completeCourse("Bezpieczenstwo w sieci");
+        kasia.completeCourse("Python dla poczatkujacych");
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        EducationalPlatform platform = new EducationalPlatform();
+
+        initializeData(platform);
 
         while (true) {
             System.out.println("\nWybierz opcje:");
@@ -50,7 +171,7 @@ public class Main {
             System.out.println("6.  Sprawdz zapisanych uzytkownikow kursu");
             System.out.println("7.  Lista wszystkich uczestnikow");
             System.out.println("8.  Lista wszystkich instruktorow");
-            System.out.println("9.  Kursy ukonczOne przez uzytkownika");
+            System.out.println("9.  Kursy ukonczne przez uzytkownika");
             System.out.println("10. Wyjscie");
             System.out.print("Wybor: ");
 
@@ -71,7 +192,22 @@ public class Main {
                     int idx = scanner.nextInt() - 1;
                     scanner.nextLine();
                     if (idx >= 0 && idx < instructors.size()) {
-                        platform.addCourse(new Course(title, desc, instructors.get(idx)));
+                        LocalDate startDate = null, endDate = null;
+                        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                        while (startDate == null) {
+                            System.out.print("Data rozpoczecia (dd-MM-yyyy): ");
+                            try { startDate = LocalDate.parse(scanner.nextLine(), fmt); }
+                            catch (DateTimeParseException e) { System.out.println("Niepoprawny format daty. Uzyj dd-MM-yyyy."); }
+                        }
+                        while (endDate == null) {
+                            System.out.print("Data zakonczenia (dd-MM-yyyy): ");
+                            try {
+                                LocalDate parsed = LocalDate.parse(scanner.nextLine(), fmt);
+                                if (!parsed.isAfter(startDate)) { System.out.println("Data zakonczenia musi byc pozniejsza niz rozpoczecia."); }
+                                else endDate = parsed;
+                            } catch (DateTimeParseException e) { System.out.println("Niepoprawny format daty. Uzyj dd-MM-yyyy."); }
+                        }
+                        platform.addCourse(new Course(title, desc, instructors.get(idx), startDate, endDate));
                         System.out.println("Kurs \"" + title + "\" zostal dodany.");
                     } else {
                         System.out.println("Niepoprawny wybor instruktora.");
@@ -177,6 +313,7 @@ public class Main {
                     List<User> enrolled = selected.getEnrolledUsers();
                     System.out.println("\nKurs: " + selected.getTitle());
                     System.out.println("Instruktor: " + selected.getInstructor().getFullName());
+                    System.out.println("Okres: " + selected.getStartDateFormatted() + " - " + selected.getEndDateFormatted());
                     if (enrolled.isEmpty()) {
                         System.out.println("Brak zapisanych uzytkownikow.");
                     } else {
@@ -235,7 +372,7 @@ public class Main {
                     if (completed.isEmpty()) {
                         System.out.println("Brak ukonczonych kursow.");
                     } else {
-                        System.out.println("Ukonczyne kursy (" + completed.size() + "):");
+                        System.out.println("Ukonczne kursy (" + completed.size() + "):");
                         for (int i = 0; i < completed.size(); i++) {
                             System.out.println("  " + (i + 1) + ". " + completed.get(i));
                         }

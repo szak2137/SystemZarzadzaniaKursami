@@ -5,24 +5,27 @@ import java.util.*;
 
 public class Main {
 
+    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
     private static void initializeData(EducationalPlatform platform) {
-        Instructor kowalski    = new Instructor("Jan",     "Kowalski");
-        Instructor nowak       = new Instructor("Anna",    "Nowak");
-        Instructor wisniewski  = new Instructor("Piotr",   "Wisniewski");
-        Instructor wojcik      = new Instructor("Katarzyna","Wojcik");
-        Instructor kaminski    = new Instructor("Michal",  "Kaminski");
+        Instructor kowalski   = new Instructor("Jan",       "Kowalski");
+        Instructor nowak      = new Instructor("Anna",      "Nowak");
+        Instructor wisniewski = new Instructor("Piotr",     "Wisniewski");
+        Instructor wojcik     = new Instructor("Katarzyna", "Wojcik");
+        Instructor kaminski   = new Instructor("Michal",    "Kaminski");
         platform.addInstructor(kowalski);
         platform.addInstructor(nowak);
         platform.addInstructor(wisniewski);
         platform.addInstructor(wojcik);
         platform.addInstructor(kaminski);
-        User marek   = new User("Marek",   "Zielinski",   "marek@example.com");
-        User ewa     = new User("Ewa",     "Dabrowska",   "ewa@example.com");
-        User tomasz  = new User("Tomasz",  "Lewandowski", "tomasz@example.com");
-        User kasia   = new User("Katarzyna","Wozniak",    "kasia@example.com");
-        User adam    = new User("Adam",    "Nowicki",     "adam@example.com");
-        User julia   = new User("Julia",   "Kowalczyk",  "julia@example.com");
-        User rafal   = new User("Rafal",   "Majewski",   "rafal@example.com");
+
+        User marek  = new User("Marek",      "Zielinski",   "marek@example.com");
+        User ewa    = new User("Ewa",        "Dabrowska",   "ewa@example.com");
+        User tomasz = new User("Tomasz",     "Lewandowski", "tomasz@example.com");
+        User kasia  = new User("Katarzyna",  "Wozniak",     "kasia@example.com");
+        User adam   = new User("Adam",       "Nowicki",     "adam@example.com");
+        User julia  = new User("Julia",      "Kowalczyk",   "julia@example.com");
+        User rafal  = new User("Rafal",      "Majewski",    "rafal@example.com");
         platform.registerUser(marek);
         platform.registerUser(ewa);
         platform.registerUser(tomasz);
@@ -30,112 +33,67 @@ public class Main {
         platform.registerUser(adam);
         platform.registerUser(julia);
         platform.registerUser(rafal);
-        Course javaPodstawy = new Course(
-                "Podstawy programowania w Javie",
+
+        Course javaPodstawy = new Course("Podstawy programowania w Javie",
                 "Wprowadzenie do programowania obiektowego w Javie",
-                kowalski,
-                LocalDate.of(2025, 1, 15), LocalDate.of(2025, 3, 15)
-        );
-        Course excel = new Course(
-                "Obsluga Excela",
+                kowalski, LocalDate.of(2025, 1, 15), LocalDate.of(2025, 3, 15));
+        Course excel = new Course("Obsluga Excela",
                 "Nauka obslugi programu Excel od podstaw do poziomu zaawansowanego",
-                nowak,
-                LocalDate.of(2025, 2, 1), LocalDate.of(2025, 4, 1)
-        );
-        Course cybersec = new Course(
-                "Bezpieczenstwo w sieci",
+                nowak, LocalDate.of(2025, 2, 1), LocalDate.of(2025, 4, 1));
+        Course cybersec = new Course("Bezpieczenstwo w sieci",
                 "Podstawy cyberbezpieczenstwa i ochrony danych osobowych",
-                wisniewski,
-                LocalDate.of(2025, 3, 10), LocalDate.of(2025, 5, 10)
-        );
-        Course python = new Course(
-                "Python dla poczatkujacych",
+                wisniewski, LocalDate.of(2025, 3, 10), LocalDate.of(2025, 5, 10));
+        Course python = new Course("Python dla poczatkujacych",
                 "Kurs jezyka Python z elementami analizy danych",
-                wojcik,
-                LocalDate.of(2025, 4, 1), LocalDate.of(2025, 6, 30)
-        );
-        Course bazy = new Course(
-                "Bazy danych SQL",
+                wojcik, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 6, 30));
+        Course bazy = new Course("Bazy danych SQL",
                 "Projektowanie i zarzadzanie relacyjnymi bazami danych",
-                kaminski,
-                LocalDate.of(2025, 2, 15), LocalDate.of(2025, 4, 15)
-        );
-        Course webdev = new Course(
-                "Tworzenie stron WWW",
+                kaminski, LocalDate.of(2025, 2, 15), LocalDate.of(2025, 4, 15));
+        Course webdev = new Course("Tworzenie stron WWW",
                 "HTML, CSS i podstawy JavaScript w praktyce",
-                kowalski,
-                LocalDate.of(2025, 5, 1), LocalDate.of(2025, 7, 31)
-        );
+                kowalski, LocalDate.of(2025, 5, 1), LocalDate.of(2025, 7, 31));
         platform.addCourse(javaPodstawy);
         platform.addCourse(excel);
         platform.addCourse(cybersec);
         platform.addCourse(python);
         platform.addCourse(bazy);
         platform.addCourse(webdev);
+
         Module javaWprow = new Module("Wprowadzenie do Javy");
-        javaWprow.addTest(new Test(
-                "Jakie jest glowne przeznaczenie jezyka Java?",
-                Arrays.asList(
-                        "Tworzenie stron internetowych",
-                        "Tworzenie aplikacji mobilnych",
-                        "Tworzenie aplikacji wieloplatformowych",
-                        "Obsluga baz danych"
-                ), 2
-        ));
-        javaWprow.addTest(new Test(
-                "Ktore slowo kluczowe sluzy do dziedziczenia w Javie?",
-                Arrays.asList("implements", "extends", "inherits", "super"),
-                1
-        ));
+        javaWprow.addTest(new Test("Jakie jest glowne przeznaczenie jezyka Java?",
+                Arrays.asList("Tworzenie stron internetowych", "Tworzenie aplikacji mobilnych",
+                        "Tworzenie aplikacji wieloplatformowych", "Obsluga baz danych"), 2));
+        javaWprow.addTest(new Test("Ktore slowo kluczowe sluzy do dziedziczenia w Javie?",
+                Arrays.asList("implements", "extends", "inherits", "super"), 1));
         javaPodstawy.addModule(javaWprow);
 
         Module javaOop = new Module("Programowanie obiektowe");
-        javaOop.addTest(new Test(
-                "Czym jest enkapsulacja?",
-                Arrays.asList(
-                        "Ukrywanie szczegolów implementacji",
-                        "Dziedziczenie po klasie bazowej",
-                        "Przeciazanie metod",
-                        "Tworzenie interfejsow"
-                ), 0
-        ));
+        javaOop.addTest(new Test("Czym jest enkapsulacja?",
+                Arrays.asList("Ukrywanie szczegolów implementacji", "Dziedziczenie po klasie bazowej",
+                        "Przeciazanie metod", "Tworzenie interfejsow"), 0));
         javaPodstawy.addModule(javaOop);
 
         Module excelWprow = new Module("Podstawy Excela");
-        excelWprow.addTest(new Test(
-                "Jakiej formuly uzywamy do sumowania zakresu komorek?",
-                Arrays.asList("=ADD()", "=SUM()", "=TOTAL()", "=PLUS()"),
-                1
-        ));
+        excelWprow.addTest(new Test("Jakiej formuly uzywamy do sumowania zakresu komorek?",
+                Arrays.asList("=ADD()", "=SUM()", "=TOTAL()", "=PLUS()"), 1));
         excel.addModule(excelWprow);
 
         Module cybersecWprow = new Module("Zagrozenia w sieci");
-        cybersecWprow.addTest(new Test(
-                "Co to jest phishing?",
-                Arrays.asList(
-                        "Technika szyfrowania danych",
-                        "Rodzaj wirusa komputerowego",
-                        "Metoda wyludzania poufnych informacji",
-                        "Protokol sieciowy"
-                ), 2
-        ));
+        cybersecWprow.addTest(new Test("Co to jest phishing?",
+                Arrays.asList("Technika szyfrowania danych", "Rodzaj wirusa komputerowego",
+                        "Metoda wyludzania poufnych informacji", "Protokol sieciowy"), 2));
         cybersec.addModule(cybersecWprow);
 
         Module pythonWprow = new Module("Podstawy Pythona");
-        pythonWprow.addTest(new Test(
-                "Jak wypisac tekst na ekran w Pythonie?",
-                Arrays.asList("echo()", "print()", "console.log()", "System.out.println()"),
-                1
-        ));
+        pythonWprow.addTest(new Test("Jak wypisac tekst na ekran w Pythonie?",
+                Arrays.asList("echo()", "print()", "console.log()", "System.out.println()"), 1));
         python.addModule(pythonWprow);
 
         Module sqlWprow = new Module("Podstawy SQL");
-        sqlWprow.addTest(new Test(
-                "Ktore polecenie SQL sluzy do pobierania danych?",
-                Arrays.asList("INSERT", "UPDATE", "SELECT", "DELETE"),
-                2
-        ));
+        sqlWprow.addTest(new Test("Ktore polecenie SQL sluzy do pobierania danych?",
+                Arrays.asList("INSERT", "UPDATE", "SELECT", "DELETE"), 2));
         bazy.addModule(sqlWprow);
+
         marek.enrollInCourse(javaPodstawy);
         marek.enrollInCourse(bazy);
         ewa.enrollInCourse(excel);
@@ -149,16 +107,232 @@ public class Main {
         julia.enrollInCourse(webdev);
         julia.enrollInCourse(excel);
         rafal.enrollInCourse(javaPodstawy);
+
         marek.completeCourse("Podstawy programowania w Javie");
         ewa.completeCourse("Obsluga Excela");
         tomasz.completeCourse("Bezpieczenstwo w sieci");
         kasia.completeCourse("Python dla poczatkujacych");
     }
 
+    private static void printCourseList(List<Course> courses) {
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println((i + 1) + ". " + courses.get(i).getTitle());
+        }
+    }
+
+    private static void printUserList(List<User> users) {
+        for (int i = 0; i < users.size(); i++) {
+            System.out.println((i + 1) + ". " + users.get(i).getFullName()
+                    + " (" + users.get(i).getEmail() + ")");
+        }
+    }
+
+    private static LocalDate readDate(Scanner scanner, String prompt, LocalDate mustBeAfter) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                LocalDate date = LocalDate.parse(scanner.nextLine(), DATE_FMT);
+                if (mustBeAfter != null && !date.isAfter(mustBeAfter)) {
+                    System.out.println("Data musi byc pozniejsza niz " + mustBeAfter.format(DATE_FMT) + ".");
+                } else {
+                    return date;
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Niepoprawny format daty. Uzyj dd-MM-yyyy.");
+            }
+        }
+    }
+
+    private static void addCourse(Scanner scanner, EducationalPlatform platform) {
+        System.out.print("Tytul kursu: ");
+        String title = scanner.nextLine();
+        System.out.print("Opis kursu: ");
+        String desc = scanner.nextLine();
+
+        List<Instructor> instructors = platform.getInstructors();
+        System.out.println("Wybierz instruktora:");
+        for (int i = 0; i < instructors.size(); i++) {
+            System.out.println((i + 1) + ". " + instructors.get(i).getFullName());
+        }
+        int idx = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        if (idx < 0 || idx >= instructors.size()) {
+            System.out.println("Niepoprawny wybor instruktora.");
+            return;
+        }
+
+        LocalDate startDate = readDate(scanner, "Data rozpoczecia (dd-MM-yyyy): ", null);
+        LocalDate endDate   = readDate(scanner, "Data zakonczenia (dd-MM-yyyy): ", startDate);
+        platform.addCourse(new Course(title, desc, instructors.get(idx), startDate, endDate));
+        System.out.println("Kurs \"" + title + "\" zostal dodany.");
+    }
+
+    private static void registerUser(Scanner scanner, EducationalPlatform platform) {
+        System.out.print("Imie: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Nazwisko: ");
+        String lastName = scanner.nextLine();
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        if (platform.registerUser(new User(firstName, lastName, email))) {
+            System.out.println("Uzytkownik " + firstName + " " + lastName + " zostal zarejestrowany.");
+        }
+    }
+
+    private static void takeTest(Scanner scanner, EducationalPlatform platform) {
+        List<Course> courses = platform.getCourses();
+        System.out.println("Wybierz kurs do testu:");
+        printCourseList(courses);
+        int courseIdx = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        if (courseIdx < 0 || courseIdx >= courses.size()) {
+            System.out.println("Niepoprawny wybor kursu.");
+            return;
+        }
+
+        Course selectedCourse = courses.get(courseIdx);
+        boolean hasTest = false;
+
+        for (Module module : selectedCourse.getModules()) {
+            for (Test test : module.getTests()) {
+                hasTest = true;
+                System.out.println("\n" + test.getQuestion());
+                List<String> answers = test.getAnswers();
+                for (int i = 0; i < answers.size(); i++) {
+                    System.out.println((i + 1) + ". " + answers.get(i));
+                }
+                System.out.print("Wybierz odpowiedz (1-" + answers.size() + "): ");
+                int answer = scanner.nextInt() - 1;
+                scanner.nextLine();
+                if (test.checkAnswer(answer)) {
+                    System.out.println("Poprawna odpowiedz!");
+                } else {
+                    System.out.println("Niepoprawna odpowiedz. Prawidlowa: "
+                            + answers.get(test.getCorrectAnswer()));
+                }
+            }
+        }
+
+        if (!hasTest) {
+            System.out.println("Ten kurs nie zawiera testu.");
+        }
+    }
+
+    private static void addInstructor(Scanner scanner, EducationalPlatform platform) {
+        System.out.print("Imie instruktora: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Nazwisko instruktora: ");
+        String lastName = scanner.nextLine();
+        platform.addInstructor(new Instructor(firstName, lastName));
+        System.out.println("Instruktor " + firstName + " " + lastName + " zostal dodany.");
+    }
+
+    private static void enrollUserInCourse(Scanner scanner, EducationalPlatform platform) {
+        List<User> users = platform.getUsers();
+        System.out.println("Wybierz uzytkownika:");
+        printUserList(users);
+        int userIdx = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        List<Course> courses = platform.getCourses();
+        System.out.println("Wybierz kurs:");
+        printCourseList(courses);
+        int courseIdx = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        if (userIdx >= 0 && userIdx < users.size() && courseIdx >= 0 && courseIdx < courses.size()) {
+            users.get(userIdx).enrollInCourse(courses.get(courseIdx));
+        } else {
+            System.out.println("Niepoprawny wybor.");
+        }
+    }
+
+    private static void showCourseEnrollments(Scanner scanner, EducationalPlatform platform) {
+        List<Course> courses = platform.getCourses();
+        System.out.println("Wybierz kurs:");
+        printCourseList(courses);
+        int courseIdx = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        if (courseIdx < 0 || courseIdx >= courses.size()) {
+            System.out.println("Niepoprawny wybor kursu.");
+            return;
+        }
+
+        Course selected = courses.get(courseIdx);
+        List<User> enrolled = selected.getEnrolledUsers();
+        System.out.println("\nKurs: " + selected.getTitle());
+        System.out.println("Instruktor: " + selected.getInstructor().getFullName());
+        System.out.println("Okres: " + selected.getStartDateFormatted() + " - " + selected.getEndDateFormatted());
+
+        if (enrolled.isEmpty()) {
+            System.out.println("Brak zapisanych uzytkownikow.");
+        } else {
+            System.out.println("Zapisani uzytkownicy (" + enrolled.size() + "):");
+            for (int i = 0; i < enrolled.size(); i++) {
+                User u = enrolled.get(i);
+                System.out.println("  " + (i + 1) + ". " + u.getFullName() + " - " + u.getEmail());
+            }
+        }
+    }
+
+    private static void listAllUsers(EducationalPlatform platform) {
+        List<User> users = platform.getUsers();
+        System.out.println("\n=== Lista uczestnikow (" + users.size() + ") ===");
+        if (users.isEmpty()) {
+            System.out.println("Brak zarejestrowanych uzytkownikow.");
+        } else {
+            for (int i = 0; i < users.size(); i++) {
+                User u = users.get(i);
+                System.out.println((i + 1) + ". " + u.getFullName() + " - " + u.getEmail());
+            }
+        }
+    }
+
+    private static void listAllInstructors(EducationalPlatform platform) {
+        List<Instructor> instructors = platform.getInstructors();
+        System.out.println("\n=== Lista instruktorow (" + instructors.size() + ") ===");
+        if (instructors.isEmpty()) {
+            System.out.println("Brak instruktorow.");
+        } else {
+            for (int i = 0; i < instructors.size(); i++) {
+                Instructor ins = instructors.get(i);
+                System.out.println((i + 1) + ". " + ins.getFullName()
+                        + " (prowadzi kursow: " + ins.getTaughtCourses().size() + ")");
+            }
+        }
+    }
+
+    private static void showCompletedCourses(Scanner scanner, EducationalPlatform platform) {
+        List<User> users = platform.getUsers();
+        System.out.println("Wybierz uzytkownika:");
+        printUserList(users);
+        int userIdx = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        if (userIdx < 0 || userIdx >= users.size()) {
+            System.out.println("Niepoprawny wybor uzytkownika.");
+            return;
+        }
+
+        User selectedUser = users.get(userIdx);
+        List<String> completed = selectedUser.getCompletedCourses();
+        System.out.println("\nUzytkownik: " + selectedUser.getFullName());
+        if (completed.isEmpty()) {
+            System.out.println("Brak ukonczonych kursow.");
+        } else {
+            System.out.println("Ukonczne kursy (" + completed.size() + "):");
+            for (int i = 0; i < completed.size(); i++) {
+                System.out.println("  " + (i + 1) + ". " + completed.get(i));
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         EducationalPlatform platform = new EducationalPlatform();
-
         initializeData(platform);
 
         while (true) {
@@ -179,206 +353,15 @@ public class Main {
             scanner.nextLine();
 
             switch (choice) {
-                case 1: {
-                    System.out.print("Tytul kursu: ");
-                    String title = scanner.nextLine();
-                    System.out.print("Opis kursu: ");
-                    String desc = scanner.nextLine();
-                    List<Instructor> instructors = platform.getInstructors();
-                    System.out.println("Wybierz instruktora:");
-                    for (int i = 0; i < instructors.size(); i++) {
-                        System.out.println((i + 1) + ". " + instructors.get(i).getFullName());
-                    }
-                    int idx = scanner.nextInt() - 1;
-                    scanner.nextLine();
-                    if (idx >= 0 && idx < instructors.size()) {
-                        LocalDate startDate = null, endDate = null;
-                        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                        while (startDate == null) {
-                            System.out.print("Data rozpoczecia (dd-MM-yyyy): ");
-                            try { startDate = LocalDate.parse(scanner.nextLine(), fmt); }
-                            catch (DateTimeParseException e) { System.out.println("Niepoprawny format daty. Uzyj dd-MM-yyyy."); }
-                        }
-                        while (endDate == null) {
-                            System.out.print("Data zakonczenia (dd-MM-yyyy): ");
-                            try {
-                                LocalDate parsed = LocalDate.parse(scanner.nextLine(), fmt);
-                                if (!parsed.isAfter(startDate)) { System.out.println("Data zakonczenia musi byc pozniejsza niz rozpoczecia."); }
-                                else endDate = parsed;
-                            } catch (DateTimeParseException e) { System.out.println("Niepoprawny format daty. Uzyj dd-MM-yyyy."); }
-                        }
-                        platform.addCourse(new Course(title, desc, instructors.get(idx), startDate, endDate));
-                        System.out.println("Kurs \"" + title + "\" zostal dodany.");
-                    } else {
-                        System.out.println("Niepoprawny wybor instruktora.");
-                    }
-                    break;
-                }
-                case 2: {
-                    System.out.print("Imie: ");
-                    String firstName = scanner.nextLine();
-                    System.out.print("Nazwisko: ");
-                    String lastName = scanner.nextLine();
-                    System.out.print("Email: ");
-                    String email = scanner.nextLine();
-                    if (platform.registerUser(new User(firstName, lastName, email))) {
-                        System.out.println("Uzytkownik " + firstName + " " + lastName + " zostal zarejestrowany.");
-                    }
-                    break;
-                }
-                case 3: {
-                    List<Course> courses = platform.getCourses();
-                    System.out.println("Wybierz kurs do testu:");
-                    for (int i = 0; i < courses.size(); i++) {
-                        System.out.println((i + 1) + ". " + courses.get(i).getTitle());
-                    }
-                    int courseIdx = scanner.nextInt() - 1;
-                    scanner.nextLine();
-                    if (courseIdx < 0 || courseIdx >= courses.size()) {
-                        System.out.println("Niepoprawny wybor kursu.");
-                        break;
-                    }
-                    Course selectedCourse = courses.get(courseIdx);
-                    boolean hasTest = false;
-                    for (Module module : selectedCourse.getModules()) {
-                        for (Test test : module.getTests()) {
-                            hasTest = true;
-                            System.out.println("\n" + test.getQuestion());
-                            List<String> answers = test.getAnswers();
-                            for (int i = 0; i < answers.size(); i++) {
-                                System.out.println((i + 1) + ". " + answers.get(i));
-                            }
-                            System.out.print("Wybierz odpowiedz (1-" + answers.size() + "): ");
-                            int answer = scanner.nextInt() - 1;
-                            scanner.nextLine();
-                            if (test.checkAnswer(answer)) {
-                                System.out.println("Poprawna odpowiedz!");
-                            } else {
-                                System.out.println("Niepoprawna odpowiedz. Prawidlowa: "
-                                        + answers.get(test.getCorrectAnswer()));
-                            }
-                        }
-                    }
-                    if (!hasTest) {
-                        System.out.println("Ten kurs nie zawiera testu.");
-                    }
-                    break;
-                }
-                case 4: {
-                    System.out.print("Imie instruktora: ");
-                    String firstName = scanner.nextLine();
-                    System.out.print("Nazwisko instruktora: ");
-                    String lastName = scanner.nextLine();
-                    platform.addInstructor(new Instructor(firstName, lastName));
-                    System.out.println("Instruktor " + firstName + " " + lastName + " zostal dodany.");
-                    break;
-                }
-                case 5: {
-                    List<User> users = platform.getUsers();
-                    System.out.println("Wybierz uzytkownika:");
-                    for (int i = 0; i < users.size(); i++) {
-                        System.out.println((i + 1) + ". " + users.get(i).getFullName()
-                                + " (" + users.get(i).getEmail() + ")");
-                    }
-                    int userIdx = scanner.nextInt() - 1;
-                    scanner.nextLine();
-                    List<Course> courses = platform.getCourses();
-                    System.out.println("Wybierz kurs:");
-                    for (int i = 0; i < courses.size(); i++) {
-                        System.out.println((i + 1) + ". " + courses.get(i).getTitle());
-                    }
-                    int courseIdx = scanner.nextInt() - 1;
-                    scanner.nextLine();
-                    if (userIdx >= 0 && userIdx < users.size()
-                            && courseIdx >= 0 && courseIdx < courses.size()) {
-                        users.get(userIdx).enrollInCourse(courses.get(courseIdx));
-                    } else {
-                        System.out.println("Niepoprawny wybor.");
-                    }
-                    break;
-                }
-                case 6: {
-                    List<Course> courses = platform.getCourses();
-                    System.out.println("Wybierz kurs:");
-                    for (int i = 0; i < courses.size(); i++) {
-                        System.out.println((i + 1) + ". " + courses.get(i).getTitle());
-                    }
-                    int courseIdx = scanner.nextInt() - 1;
-                    scanner.nextLine();
-                    if (courseIdx < 0 || courseIdx >= courses.size()) {
-                        System.out.println("Niepoprawny wybor kursu.");
-                        break;
-                    }
-                    Course selected = courses.get(courseIdx);
-                    List<User> enrolled = selected.getEnrolledUsers();
-                    System.out.println("\nKurs: " + selected.getTitle());
-                    System.out.println("Instruktor: " + selected.getInstructor().getFullName());
-                    System.out.println("Okres: " + selected.getStartDateFormatted() + " - " + selected.getEndDateFormatted());
-                    if (enrolled.isEmpty()) {
-                        System.out.println("Brak zapisanych uzytkownikow.");
-                    } else {
-                        System.out.println("Zapisani uzytkownicy (" + enrolled.size() + "):");
-                        for (int i = 0; i < enrolled.size(); i++) {
-                            User u = enrolled.get(i);
-                            System.out.println("  " + (i + 1) + ". " + u.getFullName() + " - " + u.getEmail());
-                        }
-                    }
-                    break;
-                }
-                case 7: {
-                    List<User> users = platform.getUsers();
-                    System.out.println("\n=== Lista uczestnikow (" + users.size() + ") ===");
-                    if (users.isEmpty()) {
-                        System.out.println("Brak zarejestrowanych uzytkownikow.");
-                    } else {
-                        for (int i = 0; i < users.size(); i++) {
-                            User u = users.get(i);
-                            System.out.println((i + 1) + ". " + u.getFullName() + " - " + u.getEmail());
-                        }
-                    }
-                    break;
-                }
-                case 8: {
-                    List<Instructor> instructors = platform.getInstructors();
-                    System.out.println("\n=== Lista instruktorow (" + instructors.size() + ") ===");
-                    if (instructors.isEmpty()) {
-                        System.out.println("Brak instruktorow.");
-                    } else {
-                        for (int i = 0; i < instructors.size(); i++) {
-                            Instructor ins = instructors.get(i);
-                            int courseCount = ins.getTaughtCourses().size();
-                            System.out.println((i + 1) + ". " + ins.getFullName()
-                                    + " (prowadzi kursow: " + courseCount + ")");
-                        }
-                    }
-                    break;
-                }
-                case 9: {
-                    List<User> users = platform.getUsers();
-                    System.out.println("Wybierz uzytkownika:");
-                    for (int i = 0; i < users.size(); i++) {
-                        System.out.println((i + 1) + ". " + users.get(i).getFullName()
-                                + " (" + users.get(i).getEmail() + ")");
-                    }
-                    int userIdx = scanner.nextInt() - 1;
-                    scanner.nextLine();
-                    if (userIdx < 0 || userIdx >= users.size()) {
-                        System.out.println("Niepoprawny wybor uzytkownika.");
-                        break;
-                    }
-                    User selectedUser = users.get(userIdx);
-                    List<String> completed = selectedUser.getCompletedCourses();
-                    System.out.println("\nUzytkownik: " + selectedUser.getFullName());
-                    if (completed.isEmpty()) {
-                        System.out.println("Brak ukonczonych kursow.");
-                    } else {
-                        System.out.println("Ukonczne kursy (" + completed.size() + "):");
-                        for (int i = 0; i < completed.size(); i++) {
-                            System.out.println("  " + (i + 1) + ". " + completed.get(i));
-                        }
-                    }
-                    break;
-                }
+                case 1:  addCourse(scanner, platform);            break;
+                case 2:  registerUser(scanner, platform);         break;
+                case 3:  takeTest(scanner, platform);             break;
+                case 4:  addInstructor(scanner, platform);        break;
+                case 5:  enrollUserInCourse(scanner, platform);   break;
+                case 6:  showCourseEnrollments(scanner, platform);break;
+                case 7:  listAllUsers(platform);                  break;
+                case 8:  listAllInstructors(platform);            break;
+                case 9:  showCompletedCourses(scanner, platform); break;
                 case 10:
                     System.out.println("Zakonczono program.");
                     scanner.close();
